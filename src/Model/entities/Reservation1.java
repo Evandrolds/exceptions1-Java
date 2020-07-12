@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Evandro Lima
  *
- *                           \\ Very bad solution //
+ *                        \\ Bad solution //
  */
 public class Reservation1 {
 
@@ -53,9 +53,18 @@ public class Reservation1 {
         return TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS);
     }
 
-    public void updateDates(Date checkIn, Date checkOut) {
-        this.checkIn = checkIn;
+    public String updateDates(Date checkIn, Date checkOut) {
+        Date now = new Date();
+
+        if (checkIn.before(now) || checkOut.before(now)) {
+            return " Reservation dates for Update must be future dates!";
+        }
+        if (!checkOut.after(checkIn)) {
+            return " Check-out date must be after check-in date ";
+        }
         this.checkOut = checkOut;
+        this.checkIn = checkIn;
+        return null;
     }
 
     @Override

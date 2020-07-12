@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Evandro Lima
  *
- *                          \\ Very bad solution //
+ *                        \\ Bad solution //
  */
 public class Program1 {
 
@@ -25,7 +25,7 @@ public class Program1 {
         System.out.print(" Enter Check-Out date: (dd/mm/yyyy) ");
         Date checkOut = sdf.parse(sc.next());
 
-        if (checkOut.before(checkIn)) {
+        if (!checkIn.before(checkOut)) {
             System.out.println(" Error in reservation: Check-out date must be after check-in date ");
         } else {
             Reservation1 res = new Reservation1(roomNumber, checkIn, checkOut);
@@ -38,18 +38,15 @@ public class Program1 {
             checkIn = sdf.parse(sc.next());
             System.out.print(" Enter Check-Out date: (dd/mm/yyyy) ");
             checkOut = sdf.parse(sc.next());
-            Date now = new Date();
 
-            if (checkIn.before(now) || checkOut.before(now)) {
-                System.out.println(" Error in reservatio: Reservation dates for Update must be future dates!");
-            } else if (!checkOut.after(checkIn)) {
-                System.out.println(" Error in reservation: Check-out date must be after check-in date ");
+            String error = res.updateDates(checkIn, checkOut);
+            if (error != null) {
+                System.out.println(" Error in reservation: " + error);
             } else {
 
-                res.updateDates(checkIn, checkOut);
-
-                System.out.println(" Reservation: " + res.toString());
+                System.out.println(" Reservation: " + res);
             }
+
             sc.close();
 
         }
